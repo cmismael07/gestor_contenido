@@ -26,52 +26,71 @@ if (!$result_clientes) {
     <title>Dashboard</title>
     <link rel="stylesheet" href="../css/dashboard.css">
     <link rel="stylesheet" href="../css/clientes.css">
+    <!--link rel="stylesheet" href="../css/modal.css"-->
 </head>
 <body>
     <?php include '../includes/header.php'; ?>
     <div class="container" style="margin-top: 70px;">
-        <!--h1>Bienvenido, <!-?php echo $_SESSION['username']; ?></h1-->
+        <!--h1>Bienvenido, <--?php echo $_SESSION['username']; ?></h1-->
         <div class="clientes">
-            <?php while ($cliente = $result_clientes->fetch_assoc()): ?>
-                <div class="cliente">
-                    <h3><?php echo $cliente['nombre']; ?></h3>
-                    <!--p><strong>Email:</strong> <--?php echo $cliente['email']; ?></p>
-                    <p><strong>Teléfono:</strong> <--?php echo $cliente['telefono']; ?></p>
-                    <p><strong>Dirección:</strong> <--?php echo $cliente['direccion']; ?></p-->
-                    <div class="carpetas">
-                        <h4>Carpetas</h4>
+            <!--h2>Clientes</h2-->
+            <table>
+                <thead>
+                    <tr>
+                        
+                        <th>Carpeta</th>
+                        <th colspan="3"></th>
+                        <th>Nombre Cliente</th>
+                        <!--th>Fecha y Hora</th-->
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php while ($cliente = $result_clientes->fetch_assoc()): ?>
                         <?php
                         $cliente_id = $cliente['id'];
                         $sql_carpetas = "SELECT * FROM carpetas WHERE usuario_id='$cliente_id'";
                         $result_carpetas = $conn->query($sql_carpetas);
-                        if (!$result_carpetas) {
-                            echo "<p>Error en la consulta: " . $conn->error . "</p>";
-                            continue;
-                        }
-                        while ($carpeta = $result_carpetas->fetch_assoc()): ?>
-                            <div class="carpeta">
-                                <h5><?php echo $carpeta['nombre']; ?></h5>
-                                <div class="archivos">
-                                    <!--h6>Archivos</h6-->
-                                    <?php
-                                    $carpeta_id = $carpeta['id'];
-                                    $sql_archivos = "SELECT * FROM archivos WHERE carpeta_id='$carpeta_id'";
-                                    $result_archivos = $conn->query($sql_archivos);
-                                    if (!$result_archivos) {
-                                        echo "<p>Error en la consulta: " . $conn->error . "</p>";
-                                        continue;
-                                    }
+                        if ($result_carpetas) {
+                            while ($carpeta = $result_carpetas->fetch_assoc()): ?>
+                                <tr>
+                                <td><a href="#" class="open-modal" data-carpeta-id="<?php echo $carpeta['id']; ?>"><?php echo $carpeta['nombre']; ?></a></td>
+                                <td colspan="3"></td>    
+                                <td><?php echo $cliente['nombre']; ?></td>
+                                    <!--td>Carpeta</td-->
+                                    <!--td><--?php echo $carpeta['fecha_creacion']; ?></td-->
+                                </tr>
+                                <?php
+                                $carpeta_id = $carpeta['id'];
+                                $sql_archivos = "SELECT * FROM archivos WHERE carpeta_id='$carpeta_id'";
+                                $result_archivos = $conn->query($sql_archivos);
+                                if ($result_archivos) {
                                     while ($archivo = $result_archivos->fetch_assoc()): ?>
-                                        <div class="archivo">
-                                            <p><?php echo $archivo['nombre']; ?> (<?php echo $archivo['tipo']; ?>)</p>
-                                        </div>
+                                        <tr>
+                                        <td><?php echo $archivo['nombre']; ?></td>
+                                            <td><?php echo $cliente['nombre']; ?></td>
+                                            
+                                            <!--td><--?php echo $archivo['tipo']; ?></td-->
+                                            <!--td><--?php echo $archivo['fecha_creacion']; ?></td-->
+                                        </tr>
                                     <?php endwhile; ?>
-                                </div>
-                            </div>
-                        <?php endwhile; ?>
-                    </div>
-                </div>
-            <?php endwhile; ?>
+                                <?php }
+                            endwhile;
+                        }
+                        ?>
+                    <?php endwhile; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <?php include '../includes/footer.php'; ?>
+
+    <!-- Ventana modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modal-body">
+                <!-- Aquí se mostrarán los archivos de la carpeta -->
+            </div>
         </div>
     </div>
     <?php include '../includes/footer.php'; ?>
