@@ -1,20 +1,119 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     height: 100vh;
+    background-color: #f0f2f5;
+    font-family: Arial, sans-serif;
 }
 
-form {
-    display: flex;
-    flex-direction: column;
-    width: 300px;
+.login-container, .register-container {
+    background: #fff;
+    padding: 50px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+.register-client{
+margin: 80px 0 0 0;
+height: 100vh;
+padding: 100px;
+
+}
+.login-container h2, .register-container h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
 }
 
-form label, form input, form button {
+.login-container label, .register-container label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.login-container input[type="text"], 
+.login-container input[type="password"],
+.register-container input[type="text"], 
+.register-container input[type="password"],
+.register-container input[type="email"],
+.register-container input[type="tel"],
+.register-container input[type="address"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.login-container button, .register-container button {
+    width: 100%;
+    padding: 10px;
+    background-color: #16293d;
+    border: none;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.login-container button:hover, .register-container button:hover {
+    background-color: #16293d;
+}
+
+.login-container p, .register-container p {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.login-container p a, .register-container p a {
+    color: #0000FF;
+    text-decoration: none;
+}
+
+.login-container p a:hover, .register-container p a:hover {
+    text-decoration: underline;
+}
+
+.error {
+    color: red;
     margin-bottom: 10px;
+}
+
+/* Styles for the modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }

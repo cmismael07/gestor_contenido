@@ -1,5 +1,6 @@
 <?php
 session_start();
+$error_message = "";
 include 'includes/db.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -23,10 +24,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
             exit();
         } else {
-            $error = "Invalid password.";
+            $error_message = "Contraseña incorrecta.";
         }
     } else {
-        $error = "No user found.";
+        $error_message ="No se encontró el usuario.";
     }
 }
 ?>
@@ -38,17 +39,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/topbar.css">
 </head>
 <body>
-    <form method="POST" action="login.php">
-        <h2>Bienvenidos</h2>
-        <label for="username">Usuario:</label>
-        <input type="text" id="username" name="username" placeholder="Ingrese su numbre de usuario"required>
-        <label for="password">Contraseña:</label>
-        <input type="password" id="password" name="password" placeholder="Escriba su contraseña" required>
-        <button type="submit">Acceder</button>
-        <p>Registrarme como: <a href="register.php">Usuario</a> | <a href="register_cliente.php">Cliente</a></p>
-        <?php if (isset($error)) echo "<p>$error</p>"; ?>
-    </form>
+<div class="top-bar">
+        <h1>EcuadorProtege</h1>
+    </div>  
+
+   <div class="login-container">
+        <h2>Iniciar Sesión</h2>
+        <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+            <label for="username">Usuario:</label>
+            <input type="text" id="username" name="username" required>
+            <label for="password">Contraseña:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">Iniciar Sesión</button>
+        </form>
+        <p>Registrarme como: <a href="register.php">Usuario</a> | <a href="register_cliente.php">Cliente </a></p>
+    </div>
+    <?php if ($error_message): ?>
+        <div id="modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p><?php echo $error_message; ?></p>
+            </div>
+        </div>
+    <?php endif; ?>
+    <script src="js/scripts.js"></script>
+
 </body>
 </html>

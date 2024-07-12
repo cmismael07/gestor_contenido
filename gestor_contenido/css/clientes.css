@@ -1,0 +1,46 @@
+/* clientes.css */
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.clientes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.cliente {
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    padding: 15px;
+    width: calc(33.333% - 20px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.cliente h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+.carpeta, .archivo {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #e3f2fd;
+    border-radius: 8px;
+}
+
+.carpeta h5, .archivo p {
+    margin: 0;
+}
+
+.carpeta h5 {
+    cursor: pointer;
+    color: #1a237e;
+}
+
+.carpeta h5:hover {
+    text-decoration: underline;
+}

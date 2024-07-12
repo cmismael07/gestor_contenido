@@ -1,30 +1,25 @@
 <?php
 session_start();
 
+$success_message = "";
+$error_message = "";
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Incluir el archivo de conexión a la base de datos
     include 'includes/db.php';
 
-    // Recoger y escapar los datos del formulario
     $username = mysqli_real_escape_string($conn, $_POST['username']);
     $password = mysqli_real_escape_string($conn, $_POST['password']);
 
-    // Hash de la contraseña
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    // Preparar la consulta SQL
     $sql = "INSERT INTO usuarios (username, password) VALUES ('$username', '$hashed_password')";
 
-    // Ejecutar la consulta y verificar el resultado
     if ($conn->query($sql) === TRUE) {
-        $_SESSION['success_message'] = "¡Registro exitoso! Por favor, inicia sesión.";
-        header("Location: login.php");
-        exit();
+        $success_message = "¡Registro exitoso! Por favor, inicia sesión.";
     } else {
-        $_SESSION['error_message'] = "Error al registrar usuario: " . $conn->error;
+        $error_message = "Error al registrar usuario: " . $conn->error;
     }
 
-    // Cerrar la conexión
     $conn->close();
 }
 ?>
@@ -36,31 +31,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Usuario</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/topbar.css">
 </head>
 <body>
-    <?php include 'includes/header.php'; ?>
+<div class="top-bar">
+        <h1>EcuadorProtege</h1>
+    </div> 
+    <div class="register-container">
+        <h2>Registro de Usuario</h2>
+        <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+            <label for="username">Usuario:</label>
+            <input type="text" id="username" name="username" required>
+            <label for="password">Contraseña:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">Registrarse</button>
+        </form>
+        <p>¿Ya tienes cuenta? <a href="login.php">Inicia sesión aquí</a></p>
+    </div>
 
-    <h2>Registro de Usuario</h2>
+    <?php if ($success_message || $error_message): ?>
+        <div id="modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p><?php echo $success_message ?: $error_message; ?></p>
+            </div>
+        </div>
+    <?php endif; ?>
 
-    <?php
-    if (isset($_SESSION['error_message'])) {
-        echo '<p class="error">' . $_SESSION['error_message'] . '</p>';
-        unset($_SESSION['error_message']);
-    }
-    ?>
-
-    <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-        <label for="username">Usuario:</label>
-        <input type="text" id="username" name="username" required>
-        <br>
-        <label for="password">Contraseña:</label>
-        <input type="password" id="password" name="password" required>
-        <br>
-        <button type="submit">Registrarse</button>
-    </form>
-
-    <p><a href="login.php">Inicia sesión aquí</a></p>
-
-    <?php include 'includes/footer.php'; ?>
+    <script src="js/scripts.js"></script>
 </body>
 </html>

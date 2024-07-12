@@ -7,10 +7,11 @@ if (!isset($_SESSION['user_id'])) {
 
 include '../includes/db.php';
 
-$cliente_id = $_SESSION['cliente_id'] ?? null;
+$cliente_id = $_SESSION['usuario_id'] ?? null;
+$rol = $_SESSION['rol'];
 
 // Obtener carpetas y archivos del cliente
-$sql_carpetas = "SELECT * FROM carpetas WHERE cliente_id='$cliente_id'";
+$sql_carpetas = "SELECT * FROM carpetas WHERE usuario_id='$cliente_id'";
 $result_carpetas = $conn->query($sql_carpetas);
 ?>
 
@@ -20,11 +21,11 @@ $result_carpetas = $conn->query($sql_carpetas);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Cliente</title>
-    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
 </head>
 <body>
-    <?php include '../includes/header.php'; ?>
-    <h1>Bienvenido, <?php echo $_SESSION['username']; ?></h1>
+<?php include '../includes/header.php'; ?>
+    <!--h1>Bienvenido, <!-?php echo $_SESSION['username']; ?></h1-->
     <div>
         <h2>Mis Carpetas</h2>
         <ul>

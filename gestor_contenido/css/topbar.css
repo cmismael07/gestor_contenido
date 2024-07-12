@@ -1,0 +1,16 @@
+/* Estilos para la barra superior */
+.top-bar {
+    background-color: #16293d; /* Color de fondo */
+    color: white; /* Color del texto */
+    padding: 10px 0; /* Espaciado interior */
+    text-align: left; /* Centrar el texto */
+    width: 100%; /* Ancho completo */
+    position: fixed; /* Posición fija para superponerse */
+    top: 0; /* Fijar en la parte superior */
+    z-index: 1000; /* Z-index alto para estar encima de otros elementos */
+}
+
+.top-bar h1 {
+    margin: 0;
+    font-size: 24px; /* Tamaño del texto */
+}
