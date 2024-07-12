@@ -1,0 +1,23 @@
+/* button.css */
+
+/* Estilos para el botón de menú */
+.menu-button {
+    display: none;
+    background-color: #16293d;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.menu-button:hover {
+    background-color: #16293d;
+}
+
+@media (max-width: 768px) {
+    .menu-button {
+        display: block;
+    }
+}

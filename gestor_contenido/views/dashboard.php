@@ -24,53 +24,60 @@ if (!$result_clientes) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/clientes.css">
 </head>
 <body>
     <?php include '../includes/header.php'; ?>
-    <h1>Bienvenido, <?php echo $_SESSION['username']; ?></h1>
-    <div>
-        <h2>Clientes</h2>
-        <ul>
+    <div class="container" style="margin-top: 70px;">
+        <!--h1>Bienvenido, <!-?php echo $_SESSION['username']; ?></h1-->
+        <div class="clientes">
             <?php while ($cliente = $result_clientes->fetch_assoc()): ?>
-                <li>
-                    <strong><?php echo $cliente['nombre']; ?></strong><br>
-                    Email: <?php echo $cliente['email']; ?><br>
-                    Teléfono: <?php echo $cliente['telefono']; ?><br>
-                    Dirección: <?php echo $cliente['direccion']; ?><br>
-                    <h3>Carpetas</h3>
-                    <ul>
+                <div class="cliente">
+                    <h3><?php echo $cliente['nombre']; ?></h3>
+                    <!--p><strong>Email:</strong> <--?php echo $cliente['email']; ?></p>
+                    <p><strong>Teléfono:</strong> <--?php echo $cliente['telefono']; ?></p>
+                    <p><strong>Dirección:</strong> <--?php echo $cliente['direccion']; ?></p-->
+                    <div class="carpetas">
+                        <h4>Carpetas</h4>
                         <?php
                         $cliente_id = $cliente['id'];
-                        $sql_carpetas = "SELECT * FROM carpetas WHERE cliente_id='$cliente_id'";
+                        $sql_carpetas = "SELECT * FROM carpetas WHERE usuario_id='$cliente_id'";
                         $result_carpetas = $conn->query($sql_carpetas);
                         if (!$result_carpetas) {
-                            echo "<li>Error en la consulta: " . $conn->error . "</li>";
+                            echo "<p>Error en la consulta: " . $conn->error . "</p>";
                             continue;
                         }
                         while ($carpeta = $result_carpetas->fetch_assoc()): ?>
-                            <li>
-                                <?php echo $carpeta['nombre']; ?>
-                                <ul>
+                            <div class="carpeta">
+                                <h5><?php echo $carpeta['nombre']; ?></h5>
+                                <div class="archivos">
+                                    <!--h6>Archivos</h6-->
                                     <?php
                                     $carpeta_id = $carpeta['id'];
                                     $sql_archivos = "SELECT * FROM archivos WHERE carpeta_id='$carpeta_id'";
                                     $result_archivos = $conn->query($sql_archivos);
                                     if (!$result_archivos) {
-                                        echo "<li>Error en la consulta: " . $conn->error . "</li>";
+                                        echo "<p>Error en la consulta: " . $conn->error . "</p>";
                                         continue;
                                     }
                                     while ($archivo = $result_archivos->fetch_assoc()): ?>
-                                        <li><?php echo $archivo['nombre']; ?> (<?php echo $archivo['tipo']; ?>)</li>
+                                        <div class="archivo">
+                                            <p><?php echo $archivo['nombre']; ?> (<?php echo $archivo['tipo']; ?>)</p>
+                                        </div>
                                     <?php endwhile; ?>
-                                </ul>
-                            </li>
+                                </div>
+                            </div>
                         <?php endwhile; ?>
-                    </ul>
-                </li>
+                    </div>
+                </div>
             <?php endwhile; ?>
-        </ul>
+        </div>
     </div>
     <?php include '../includes/footer.php'; ?>
+    <script src="../js/navbar.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../js/clientes.js"></script>
+    <script src="../js/search.js"></script>
 </body>
 </html>
